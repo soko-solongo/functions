@@ -1,0 +1,5 @@
+body {
+    min-inline-size: 500px;
+    min-block-size: 300px;
+    color: red;
+}
