@@ -1,1 +1,5 @@
-console.log("This is a popup!")
+document.getElementById("startbutton").addEventListener("click", function() {
+
+})
+
+console.log("started")
