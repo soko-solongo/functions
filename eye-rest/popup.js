@@ -1,3 +1,12 @@
+// setInterval() repeats the task every X milliseconds (1000 milliseconds = 1 second).
+// parseInt() converts the string in the <p> to number.
+// clearInterval() stops the timer when it reaches 0.
+
+//Learning resources:
+// https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+// https://developer.mozilla.org/en-US/docs/Web/API/Window/clearInterval
+
 document.getElementById("startbutton").addEventListener("click", function() {
     let intervalId = setInterval(function() {
          let timer = document.getElementById("timer"); // refers to <p> in html file
