@@ -15,6 +15,7 @@ document.getElementById("startbutton").addEventListener("click", function() {
         timer.innerText = time; //updating the display after substracting 1    
 
         if (time === 0) {
+            clearInterval(intervalId); //stopping the timer when it reaches 0
             chrome.tabs.query({active: true, currentWindow: true}, 
                 function(tabs) {
                     chrome.scripting.executeScript({
