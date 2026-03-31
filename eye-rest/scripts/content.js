@@ -5,8 +5,8 @@ paras.forEach(paragraph => {
 )
 
 let container = `
-<div id="paragraph-counter">
-    You have ${paras.length} paragraphs in this page.
-</div>
-`
+    <div id="paragraph-counter">
+        You have ${paras.length} paragraphs in this page.
+    </div>
+    `
 document.body.insertAdjacentHTML("afterbegin", container);
