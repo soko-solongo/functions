@@ -9,14 +9,22 @@
 
 document.getElementById("startbutton").addEventListener("click", function() {
     let intervalId = setInterval(function() {
-         let timer = document.getElementById("timer"); // refers to <p> in html file
-         let time = parseInt(timer.innerText); //converting the string in the <p> to an integer number
-         time--; //substracting 1 from the time (counting down)
-         timer.innerText = time; //updating the display after substracting 1    
+        let timer = document.getElementById("timer"); // refers to <p> in html file
+        let time = parseInt(timer.innerText); //converting the string in the <p> to an integer number
+        time--; //substracting 1 from the time (counting down)
+        timer.innerText = time; //updating the display after substracting 1    
 
-         if (time === 0) {
-             clearInterval(intervalId); //stoping the timer when it reaches 0
-         }
+        if (time === 0) {
+            chrome.tabs.query({active: true, currentWindow: true}, 
+                function(tabs) {
+                    chrome.scripting.executeScript({
+                        target: {tabId: tabs[0].id}, 
+                        func: function() {
+                            console.log("Time to rest your eyes!")
+                        }
+                    });
+            });
+        }
          
      }, 1000)
 })
