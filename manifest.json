@@ -1,8 +1,12 @@
+// This file is my extension's administration file including the name, description, version, and other necessary information for the extension to work properly. It is written in JSON format and is required for any Chrome extension.
+
 {
-  "name": "Hello Extensions of the world!",
-  "description": "Base Level Extension",
+  "name": "Eyerest Reminder!",
+  "description": "This is a simple extension to remind you to rest your eye once in few minutes.",
   "version": "1.0",
   "manifest_version": 3,
+
+  // when the user clicks my extension icon, it will open a popup (hello.html) and use the image (hello_extensions.png) as the icon for the extension.
   "action": {
     "default_popup": "hello.html",
     "default_icon": "hello_extensions.png"
