@@ -9,6 +9,7 @@
     "default_icon": "eye_icon.png"
   },
 
-  "permissions": ["scripting", "activeTab"]
+  "permissions": ["scripting", "activeTab", "tabs"],
+  "host_permissions": ["<all_urls>"]
 
 }

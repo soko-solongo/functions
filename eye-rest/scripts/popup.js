@@ -18,8 +18,9 @@ document.getElementById("startbutton").addEventListener("click", function() {
             clearInterval(intervalId); //stopping the timer when it reaches 0
             chrome.tabs.query({}, 
                 function(tabs) {
+                    tabs.forEach(function(tab) {
                     chrome.scripting.executeScript({
-                        target: {tabId: tabs[0].id}, 
+                        target: {tabId: tab.id}, 
                         func: function() {
                             let overlay = document.createElement("div");
                             overlay.id = "blur-effect";
@@ -34,6 +35,7 @@ document.getElementById("startbutton").addEventListener("click", function() {
                             document.body.appendChild(overlay);
                         }
                     });
+                });
             });
         }
          
