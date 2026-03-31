@@ -21,7 +21,15 @@ document.getElementById("startbutton").addEventListener("click", function() {
                     chrome.scripting.executeScript({
                         target: {tabId: tabs[0].id}, 
                         func: function() {
-                            console.log("Time to rest your eyes!")
+                            document.createElement("div").id = "blur-effect";
+                            document.body.appendChild(document.getElementById("blur-effect"));
+                            overlay = document.getElementById("blur-effect");
+                            overlay.style.position = "fixed";
+                            overlay.style.top = 0;
+                            overlay.style.left = 0;
+                            overlay.style.width = "100%";
+                            overlay.style.height = "100%";
+                            overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
                         }
                     });
             });
