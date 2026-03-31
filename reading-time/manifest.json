@@ -16,9 +16,6 @@
       "js": ["scripts/content.js"],
       "css": ["style.css"],
       "matches": [
-        // "https://developer.chrome.com/docs/extensions/*",
-        // "https://developer.chrome.com/docs/webstore/*"
-
         "<all_urls>"
       ]
     }
