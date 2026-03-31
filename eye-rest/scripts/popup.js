@@ -16,7 +16,7 @@ document.getElementById("startbutton").addEventListener("click", function() {
 
         if (time === 0) {
             clearInterval(intervalId); //stopping the timer when it reaches 0
-            chrome.tabs.query({active: true, currentWindow: true}, 
+            chrome.tabs.query({}, 
                 function(tabs) {
                     chrome.scripting.executeScript({
                         target: {tabId: tabs[0].id}, 
