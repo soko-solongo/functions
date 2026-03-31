@@ -9,14 +9,6 @@
     "default_icon": "eye_icon.png"
   },
 
-  "content_scripts": [
-    {
-      "js": ["scripts/popup.js","scripts/content.js"],
-      "css": ["style.css"],
-      "matches": [
-        "<all_urls>"
-      ]
-    }
-  ]
+  "permissions": ["scripting", "activeTab"]
 
 }
