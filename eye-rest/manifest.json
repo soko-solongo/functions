@@ -1,0 +1,11 @@
+
+{
+  "name": "Eyerest Reminder!",
+  "description": "This is a simple extension to remind you to rest your eye once in few minutes.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "hello.html",
+    "default_icon": "eye_icon.png"
+  }
+}
