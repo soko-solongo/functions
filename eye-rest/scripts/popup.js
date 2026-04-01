@@ -64,16 +64,20 @@ function startTimer () {
                                     }
                                 }
                         });
+
+                        document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds after it reaches 0
+                        startTimer(); // restarting the timer
+                        
                     }, 5000);
 
-                    });
+                    
+                });
             });
         }
          
     }, 1000)
 }
 
-document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds after it reaches 0
 document.getElementById("startbutton").addEventListener("click", function() {
     startTimer();
 })
