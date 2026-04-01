@@ -12,7 +12,15 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/clearInterval
 // https://developer.chrome.com/docs/extensions/reference/api/scripting
 
-document.getElementById("startbutton").addEventListener("click", function() {
+
+
+// When user clicks "start" button, everything inside this function will run.
+// document.getElementById("startbutton").addEventListener("click", function() {
+
+
+function startTimer () {
+
+    // Every 1 second will be deducted from the original value indicated in html file.
     let intervalId = setInterval(function() {
         let timer = document.getElementById("timer"); // refers to <p> in html file
         let time = parseInt(timer.innerText); //converting the string in the <p> to an integer number
@@ -21,10 +29,13 @@ document.getElementById("startbutton").addEventListener("click", function() {
 
         if (time === 0) {
             clearInterval(intervalId); //stopping the timer when it reaches 0
+
+            // Targeting to all opened tabs.
             chrome.tabs.query({}, 
             function(tabs) {
                 tabs.forEach(function(tab) {
 
+                    //Applying the blur effect.
                     chrome.scripting.executeScript({
                         target: {tabId: tab.id}, 
                         func: function() {
@@ -42,6 +53,7 @@ document.getElementById("startbutton").addEventListener("click", function() {
                         }
                     });
 
+                    // Removing the blur effect after 5 seconds.
                     setTimeout(function() {
                         chrome.scripting.executeScript({
                             target: {tabId: tab.id}, 
@@ -59,4 +71,8 @@ document.getElementById("startbutton").addEventListener("click", function() {
         }
          
     }, 1000)
+}
+
+document.getElementById("startbutton").addEventListener("click", function() {
+    startTimer();
 })
