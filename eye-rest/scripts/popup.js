@@ -22,8 +22,9 @@ document.getElementById("startbutton").addEventListener("click", function() {
         if (time === 0) {
             clearInterval(intervalId); //stopping the timer when it reaches 0
             chrome.tabs.query({}, 
-                function(tabs) {
-                    tabs.forEach(function(tab) {
+            function(tabs) {
+                tabs.forEach(function(tab) {
+
                     chrome.scripting.executeScript({
                         target: {tabId: tab.id}, 
                         func: function() {
@@ -44,17 +45,18 @@ document.getElementById("startbutton").addEventListener("click", function() {
                     setTimeout(function() {
                         chrome.scripting.executeScript({
                             target: {tabId: tab.id}, 
-                            func: function() {
-                                let overlay = document.getElementById("blur-effect");
-                                if (overlay) {
-                                    overlay.remove();
+                                func: function() {
+                                    let overlay = document.getElementById("blur-effect");
+                                    if (overlay) {
+                                        overlay.remove();
+                                    }
                                 }
-                            }
                         });
                     }, 5000);
-                });
+
+                    });
             });
         }
          
-     }, 1000)
+    }, 1000)
 })
