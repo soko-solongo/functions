@@ -1,10 +1,14 @@
+//RECAP of code: startTimer() is using setInterval() to countdown every second in the popup, and when it reaches 0, it stops and chrome.scripting does its magic of talking to browser and injecting blur effect to every opened tab through chrome.tabs.query({}) with 2 forEach Loops. (first forEach is applying blur, and second forEach is removing blur after 5 sec). Then, I am calling startTimer() again in the end to start over everything. However, I have to rethink about the "user-input" milestone of the assignment...
+
+
 // setInterval() repeats the task every X milliseconds (1000 milliseconds = 1 second).
 // parseInt() converts the string in the <p> to number.
 // clearInterval() stops the timer when it reaches 0.
 // chrome.tabs.query() gets all the tabs that are currently open in the browser.
-// chrome.scripting.executeScript() executes the function that creates the overlay in all the tabs.
+// chrome.scripting.executeScript() executes the function that creates the overlay in all the tabs (injects the action to webpages).
 // document.body.appendChild(overlay) adds the overlay to the webpage, which creates the blur effect.
 // element.remove() removes the overlay from the webpage, which removes the blur effect.
+
 
 //Learning resources:
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval
@@ -12,10 +16,6 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/clearInterval
 // https://developer.chrome.com/docs/extensions/reference/api/scripting
 
-
-
-// When user clicks "start" button, everything inside this function will run.
-// document.getElementById("startbutton").addEventListener("click", function() {
 
 
 function startTimer () {
@@ -33,6 +33,8 @@ function startTimer () {
             // Targeting to all opened tabs.
             chrome.tabs.query({}, 
             function(tabs) {
+
+                // First forEach loop is applying blur to every tab opened
                 tabs.forEach(function(tab) {
 
                     //Applying the blur effect.
@@ -52,9 +54,13 @@ function startTimer () {
                             document.body.appendChild(overlay);
                         }
                     });
+                }); // end of tabs.forEach
 
-                    // Removing the blur effect after 5 seconds.
-                    setTimeout(function() {
+                // Removing the blur effect after 5 seconds.
+                setTimeout(function() {
+
+                    //Second forEach loop is removing blur to every tab opened
+                    tabs.forEach(function(tab) {
                         chrome.scripting.executeScript({
                             target: {tabId: tab.id}, 
                                 func: function() {
@@ -64,20 +70,18 @@ function startTimer () {
                                     }
                                 }
                         });
+                    }); // end of tabs.forEach
 
-                        document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds after it reaches 0
-                        startTimer(); // restarting the timer
-                        
-                    }, 5000);
+                    document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds after it reaches 0
+                    startTimer(); // restarting the timer
 
-                    
-                });
+                }, 5000);
             });
-        }
-         
+        }   
     }, 1000)
 }
 
+// looping the function
 document.getElementById("startbutton").addEventListener("click", function() {
     startTimer();
 })
