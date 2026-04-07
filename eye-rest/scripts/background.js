@@ -8,7 +8,29 @@
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onMessage
 
 
+function startTimer () {
+
+    // Every 1 second will be deducted from the original value indicated in html file.
+    let intervalId = setInterval(function() {
+
+        chrome.storage.local.get("timeRemaining", function(result) {
+            let time = result.timeRemaining - 1; // Subtracting 1 from the time remaining
+            chrome.storage.local.set({timeRemaining: time});
+
+            if (time === 0) {
+                clearInterval(intervalId); // Stopping the timer when it reaches 0
+                applyBlur(); // Calling the function to apply blur effect when the timer reaches 0
+            }
+        });  
+    }, 1000)
+}
+
 chrome.runtime.onMessage.addListener(function(message) {
+    if (message.action === "startTimer") { // The timer will be started in background.js when the user clicks the start button in popup.js
+        chrome.storage.local.set({timeRemaining: 10}); // Setting the timer to 10 seconds
+        startTimer(); // Starting the timer
+    }
+
     if (message.action === "applyBlur") {
         // Targeting to all opened tabs.
             chrome.tabs.query({}, 
@@ -54,6 +76,7 @@ chrome.runtime.onMessage.addListener(function(message) {
                     }); // end of tabs.forEach
 
                     chrome.runtime.sendMessage({ action: "removeBlur"});
+                    chrome.storage.local.set({timeRemaining: 10}); // Resetting the timer to 10 seconds after the blur effect is removed
                  }); // sending a message to popup.js to reset the timer and start over again
 
                 }, 5000);

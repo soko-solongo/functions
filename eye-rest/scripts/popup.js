@@ -16,32 +16,21 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/clearInterval
 // https://developer.chrome.com/docs/extensions/reference/api/scripting
 
-
-
-function startTimer () {
-
-    // Every 1 second will be deducted from the original value indicated in html file.
-    let intervalId = setInterval(function() {
-        let timer = document.getElementById("timer"); // refers to <p> in html file
-        let time = parseInt(timer.innerText); //converting the string in the <p> to an integer number
-        time--; //substracting 1 from the time (counting down)
-        timer.innerText = time; //updating the display after substracting 1    
-
-        if (time === 0) {
-            clearInterval(intervalId); //stopping the timer when it reaches 0
-            chrome.runtime.sendMessage({action: "applyBlur"}); //sending a message to background.js to apple the blur
-        }   
-    }, 1000)
-}
-
 chrome.runtime.onMessage.addListener(function(message) {
     if (message.action === "removeBlur") { // The blur effect will be removed in background.js after 5 seconds
         document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds
-        startTimer(); // restarting the timer
     }
 })
 
+setInterval(function() {
+    chrome.storage.local.get("timeRemaining", function(result) {
+        if (result.timeRemaining > 0) {
+            document.getElementById("timer").innerText = result.timeRemaining; // Updating the timer in popup.html every second
+        }
+    });
+}, 1000);
+
 // looping the function
 document.getElementById("startbutton").addEventListener("click", function() {
-    startTimer();
+    chrome.runtime.sendMessage({action: "startTimer"}); // Sending a message to background.js to start the timer when the user clicks the start button in popup.js
 })
