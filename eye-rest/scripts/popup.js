@@ -1,7 +1,4 @@
-chrome.runtime.onMessage.addListener(function(message) {
-    if (message.action === "removeBlur") { // The blur effect will be removed in background.js after 5 seconds
-    }
-})
+// Code structure is explained in background.js file
 
 setInterval(function() {
     chrome.storage.local.get("timeRemaining", function(result) {

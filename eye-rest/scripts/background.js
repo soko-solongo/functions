@@ -1,3 +1,29 @@
+// RECAP OF CODE STRUCTURE: So basically, background.js is doing the entire job of core function, and popup.js is only showing what's happening and listen for user clicks.
+
+// 1. background.js owns the timer and the blur effect.
+//    startTimer() counts down every 1 second using storage, and then calls applyBlur() when time reaches 0.
+//    applyBlur() applies the blur effect to all tabs using chrome.scripting (by injecting the code), and then removes the blur effect after 5 seconds using setTimeout().
+
+// 2. popup.js listens for messages from background.js to reset the timer and start over again after the blur effect is removed.
+//    popup.js reads the time remaining from storage and updates the timer in popup.html every second using setInterval(). 
+//    when start is clicked, popup.js sends a message to background.js to start the timer.
+
+// 3. chrome.storage is used to store the time remaining for the timer, which allows both background.js and popup.js to access and update the timer value.
+//    it's basically a shared memory for both background.js and popup.js to communicate and keep track of the timer value.
+
+
+// FULL USER FLOW:
+// 1. User clicks "Start" button
+// 2. popup.js sends a message to background.js to start the timer.
+// 3. background.js listens for the message and starts the countdown in storage.
+// 4. popup.js reads the storage and displays the value in popup window shown to the user.
+// 5. when timer value hits 0, applyBlur() function activates
+// 6. All opened tabs get blurred for 5 seconds
+// 7. After 5 seconds, the blur effect is removed and a message is sent to popup.js to reset the timer and startTimer() activates again.
+// 8. (loops forever) popup.js listens for the message and resets the timer to 10 seconds, which starts the countdown again in popup window shown to the user.
+
+
+// SOME FUNCTIONS I learned on the way to achieve my code:
 // setInterval() repeats the task every X milliseconds (1000 milliseconds = 1 second).
 // parseInt() converts the string in the <p> to number.
 // clearInterval() stops the timer when it reaches 0.
@@ -10,7 +36,7 @@
 // runtime.onMessage() is used to listen for messages in popup.js and execute the function to reset the timer and start over again when the message is received.
 
 
-//Learning resources:
+//Learning resources for SOME FUNCTIONS:
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/clearInterval
@@ -70,7 +96,10 @@ function applyBlur() {
     });
 }
 
-let intervalId = null; // Declaring intervalId in the global scope to be able to clear it later
+let intervalId = null; // Declaring intervalId to be empty 
+// let intervalID = null; --- It means the value slot exists, but it is empty.
+// intervalId = setInterval(..bla bla...) --- It means the value slot is now filled with timer value.
+// clearInterval(intervalId) ---  It means the value slot is empty back again.
 
 function startTimer () {
 
