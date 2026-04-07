@@ -59,9 +59,9 @@ function startTimer () {
                 // Removing the blur effect after 5 seconds.
                 setTimeout(function() {
 
-                    chrome.tabs.query({}, function(tabs) {
+                    chrome.tabs.query({}, function(newTabs) {
                     //Second forEach loop is removing blur to every tab opened
-                    tabs.forEach(function(tab) {
+                    newTabs.forEach(function(tab) {
                         chrome.scripting.executeScript({
                             target: {tabId: tab.id}, 
                             func: function() {
@@ -72,10 +72,11 @@ function startTimer () {
                             }
                         });
                     }); // end of tabs.forEach
-                    });
-
+                    
                     document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds after it reaches 0
                     startTimer(); // restarting the timer
+                    });
+
 
                 }, 5000);
             });
