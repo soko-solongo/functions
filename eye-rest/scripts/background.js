@@ -60,14 +60,7 @@ function removeBlur() {
         });
     });
     
-    if (message.action === "cancelTimer") { // The timer will be cancelled in background.js when the user clicks the cancel button in popup.js
-        clearInterval(intervalId);
-        intervalId = null; // Resetting intervalId to null after clearing the timer
-        removeBlur(); // Calling the function to remove the blur effect when the timer is cancelled
-        chrome.storage.local.set({timeRemaining: 10}); // Resetting the timer to 10 seconds when the timer is cancelled
-    }
 }
-
 
 function applyBlur() {
     chrome.tabs.query({}, function(tabs) {
@@ -97,8 +90,8 @@ function applyBlur() {
         setTimeout(function() {
 
             removeBlur(); // Calling the function to remove the blur effect after 5 seconds
-            chrome.runtime.sendMessage({action: "removeBlur"}); // Sending a message to popup.js to reset the timer and start over again after the blur effect is removed.
-
+            chrome.storage.local.set({timeRemaining: 10}); // Resetting the timer to 10 seconds after the blur effect is removed
+            startTimer(); // Starting the timer again after the blur effect is removed, which creates a loop of the entire process.
         }, 5000);
 
     });
@@ -134,5 +127,12 @@ chrome.runtime.onMessage.addListener(function(message) {
     if (message.action === "startTimer") { // The timer will be started in background.js when the user clicks the start button in popup.js
         chrome.storage.local.set({timeRemaining: 10}); // Setting the timer to 10 seconds
         startTimer(); // Starting the timer
+    }
+
+    if (message.action === "cancelTimer") { // The timer will be cancelled in background.js when the user clicks the cancel button in popup.js
+        clearInterval(intervalId);
+        intervalId = null; // Resetting intervalId to null after clearing the timer
+        removeBlur(); // Calling the function to remove the blur effect when the timer is cancelled
+        chrome.storage.local.set({timeRemaining: 10}); // Resetting the timer to 10 seconds when the timer is cancelled
     }
 });
