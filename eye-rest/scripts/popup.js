@@ -34,6 +34,13 @@ function startTimer () {
     }, 1000)
 }
 
+chrome.runtime.onMessage.addListener(function(message) {
+    if (message.action === "removeBlur") { // The blur effect will be removed in background.js after 5 seconds
+        document.getElementById("timer").innerText = 10; //resetting the timer to 10 seconds
+        startTimer(); // restarting the timer
+    }
+})
+
 // looping the function
 document.getElementById("startbutton").addEventListener("click", function() {
     startTimer();
