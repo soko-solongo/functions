@@ -89,9 +89,11 @@ function applyBlur() {
         // Removing the blur effect after 5 seconds.
         setTimeout(function() {
 
-            removeBlur(); // Calling the function to remove the blur effect after 5 seconds
-            chrome.storage.local.set({timeRemaining: 10}); // Resetting the timer to 10 seconds after the blur effect is removed
-            startTimer(); // Starting the timer again after the blur effect is removed, which creates a loop of the entire process.
+            removeBlur();
+            chrome.storage.local.get("originalTime", function(result) { // calling the function to remove the blur effect after 5 seconds
+                chrome.storage.local.set({timeRemaining: result.originalTime}); // resetting the timer to the original time after the blur effect is removed
+                startTimer(); // starting the timer again after the blur effect is removed, which creates a loop of the entire process
+            });
         }, 5000);
 
     });
@@ -125,7 +127,10 @@ function startTimer () {
 
 chrome.runtime.onMessage.addListener(function(message) {
     if (message.action === "startTimer") { // The timer will be started in background.js when the user clicks the start button in popup.js
-        chrome.storage.local.set({timeRemaining: 10}); // Setting the timer to 10 seconds
+        chrome.storage.local.set({
+            timeRemaining: message.time, // Setting the time remaining in storage to the value of the button clicked by the user in popup.js, which is sent through the message from popup.js to background.js. This allows the timer to start counting down from the selected time.
+            originalTime: message.time
+        }); // Setting the timer to 10 seconds
         startTimer(); // Starting the timer
     }
 
@@ -133,6 +138,8 @@ chrome.runtime.onMessage.addListener(function(message) {
         clearInterval(intervalId);
         intervalId = null; // Resetting intervalId to null after clearing the timer
         removeBlur(); // Calling the function to remove the blur effect when the timer is cancelled
-        chrome.storage.local.set({timeRemaining: 10}); // Resetting the timer to 10 seconds when the timer is cancelled
+        chrome.storage.local.get("originalTime", function(result) { // Getting the original time from storage to reset the timer in popup.js when the timer is cancelled
+            chrome.storage.local.set({timeRemaining: result.originalTime}); // Resetting the timer to the original time after the timer is cancelled
+        });
     }
 });
