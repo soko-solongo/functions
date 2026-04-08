@@ -1,15 +1,16 @@
 /* This is the styling document for my popup window. */
 
 body {
-    background: rgb(131, 131, 131);
-    color: white;
+    background: rgb(204, 204, 204);
+    color: black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
+    inline-size: 300px;
 }
 
 button {
     color: black;
-    font-size: 20px;
+    font-size: 16px;
     padding: 10px;
     border-radius: 5px;
     border: none;
@@ -51,4 +52,9 @@ button {
     flex-direction: row;
     gap: 10px;
     margin-bottom: 20px;
+}
+
+#timer {
+    font-size: 40px;
+    font-weight: bold;
 }

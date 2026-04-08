@@ -5,15 +5,22 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <hgroup>
+            <h1>Eye Rest Reminder</h1>
+            <p>
+                Rest your eyes every 10 or 20 minutes to prevent eye strain and maintain good eye health. Screen will blur for 1 minute every time the timer runs out, reminding you to take a break and look away from the screen.
+            </p>
+        </hgroup>
+        <h2>Select a working time</h2>
         <div class="time-choices">
-            <button class="timebutton" data-time="60">1 min</button>
-            <button class="timebutton" data-time="120">2 min</button>
+            <button class="timebutton" data-time="10">10 min</button>
+            <button class="timebutton" data-time="20">20 min</button>
         </div>
+        <p id="timer">--</p>
         <div class="controls">
             <button id="startbutton">Start</button>
             <button id="cancelbutton">Cancel</button>
         </div>
-        <p id="timer">--</p>
         <script src="scripts/popup.js"></script>
     </body>
 </html>

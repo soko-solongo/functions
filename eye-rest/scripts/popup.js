@@ -1,6 +1,6 @@
 // Code structure is explained in background.js file
 
-let selectedTime = 60; // default time is 1 min
+let selectedTime = 10; // default time is 1 min
 
 document.querySelector(".timebutton").classList.add("selected"); // Adding a visual indication of the default selected time button
 document.querySelectorAll(".timebutton").forEach(button => {
