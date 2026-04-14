@@ -118,6 +118,17 @@ function startTimer () {
             let time = result.timeRemaining - 1; // Subtracting 1 from the time remaining
             chrome.storage.local.set({timeRemaining: time});
 
+            // Showing warning 5 seconds before the blur activates
+            // https://developer.chrome.com/docs/extensions/reference/api/notifications
+            if (time === 5) {
+                chrome.notifications.create("Warning", {
+                    type: "basic",
+                    iconUrl: "eye_icon.png",
+                    title: "Warning",
+                    message: "Time to rest your eyes! Please take a break for 1 min"
+                });
+            }
+
             if (time === 0) {
                 clearInterval(intervalId); // Stopping the timer when it reaches 0
                 applyBlur(); // Calling the function to apply blur effect when the timer reaches 0

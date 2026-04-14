@@ -9,7 +9,7 @@
     "default_icon": "eye_icon.png"
   },
 
-  "permissions": ["scripting", "activeTab", "tabs", "storage"],
+  "permissions": ["scripting", "activeTab", "tabs", "storage", "notifications"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "scripts/background.js"
