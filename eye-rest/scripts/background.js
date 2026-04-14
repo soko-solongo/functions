@@ -121,10 +121,10 @@ function startTimer () {
             // Showing warning 5 seconds before the blur activates
             // https://developer.chrome.com/docs/extensions/reference/api/notifications
             if (time === 5) {
-                chrome.notifications.create("Warning", {
+                chrome.notifications.create("Notif", {
                     type: "basic",
-                    iconUrl: "eye_icon.png",
-                    title: "Warning",
+                    iconUrl: chrome.runtime.getURL("eye_icon.png"),
+                    title: "Notif",
                     message: "Time to rest your eyes! Please take a break for 1 min"
                 });
             }
@@ -159,3 +159,5 @@ chrome.runtime.onMessage.addListener(function(message) {
         });
     }
 });
+
+chrome.runtime.sendMessage({action: "startTimer", time: 6})
