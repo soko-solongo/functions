@@ -140,10 +140,10 @@ chrome.runtime.onMessage.addListener(function(message) {
         clearInterval(intervalId);
         intervalId = null; // Resetting intervalId to null after clearing the timer
         removeBlur(); // Calling the function to remove the blur effect when the timer is cancelled
+        chrome.storage.local.set({ isRunning: false }); // Setting isRunning to false in storage to indicate that the timer is not running anymore after the timer is cancelled
         chrome.storage.local.get("originalTime", function(result) { // Getting the original time from storage to reset the timer in popup.js when the timer is cancelled
             chrome.storage.local.set({
-                timeRemaining: result.originalTime, // Resetting the timer to the original time after the timer is cancelled
-                isRunning: false
+                timeRemaining: result.originalTime // Resetting the timer to the original time after the timer is cancelled
             }); 
         });
     }

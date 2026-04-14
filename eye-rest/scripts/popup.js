@@ -16,11 +16,20 @@ document.querySelectorAll(".timebutton").forEach(button => {
         });
     });
 
+function updateButtonState(isRunning) {
+    document.getElementById("startbutton").disabled = isRunning; // Disabling the start button when the timer is running
+    document.getElementById("cancelbutton").disabled = !isRunning; // Enabling the cancel button when the timer is running
+}
+
 setInterval(function() {
     chrome.storage.local.get("timeRemaining", function(result) {
         if (result.timeRemaining >= 0) {
             document.getElementById("timer").innerText = result.timeRemaining; // Updating the timer in popup.html every second
         }
+    });
+
+    chrome.storage.local.get("isRunning", function(result) {
+        updateButtonState(result.isRunning);
     });
 }, 1000);
 
