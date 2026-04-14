@@ -31,7 +31,7 @@
 // chrome.scripting.executeScript() executes the function that creates the overlay in all the tabs (injects the action to webpages).
 // document.body.appendChild(overlay) adds the overlay to the webpage, which creates the blur effect.
 // element.remove() removes the overlay from the webpage, which removes the blur effect.
-// service-worker.js
+// service-worker.js runs in the background and listens for updates/messages from popup.js to perform the actions.
 // runtime.sendMessage() is used to send a message from background.js to popup.js to reset the timer and start over again after the blur effect is removed. 
 // runtime.onMessage() is used to listen for messages in popup.js and execute the function to reset the timer and start over again when the message is received.
 
@@ -44,6 +44,7 @@
 // https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/sample.page-redder/service-worker.js
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/sendMessage
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onMessage
+
 
 function removeBlur() {
     chrome.tabs.query({}, function(tabs) {
@@ -74,13 +75,13 @@ function applyBlur() {
                     let overlay = document.createElement("div");
                     overlay.id = "blur-effect";
                     overlay.style.position = "fixed";
-                    overlay.style.top = 0;
-                    overlay.style.left = 0;
-                    overlay.style.width = "100%";
+                    overlay.style.top = "0";
+                    overlay.style.left = "0";
+                    overlay.style.width = "100%"; // I can't use logical property here because JS is senstive to -, so O had to use width instead of inline-size.
                     overlay.style.height = "100%";
-                    overlay.style.backdropFilter = "blur(5px)";
                     overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-                    overlay.style.zIndex = 9999;
+                    overlay.style.backdropFilter = "blur(5px)";
+                    overlay.style.zIndex = "9999";
                     document.body.appendChild(overlay);
                 }
             });
@@ -129,7 +130,8 @@ chrome.runtime.onMessage.addListener(function(message) {
     if (message.action === "startTimer") { // The timer will be started in background.js when the user clicks the start button in popup.js
         chrome.storage.local.set({
             timeRemaining: message.time, // Setting the time remaining in storage to the value of the button clicked by the user in popup.js, which is sent through the message from popup.js to background.js. This allows the timer to start counting down from the selected time.
-            originalTime: message.time
+            originalTime: message.time,
+            isRunning: true
         }); // Setting the timer to 10 seconds
         startTimer(); // Starting the timer
     }
@@ -139,7 +141,10 @@ chrome.runtime.onMessage.addListener(function(message) {
         intervalId = null; // Resetting intervalId to null after clearing the timer
         removeBlur(); // Calling the function to remove the blur effect when the timer is cancelled
         chrome.storage.local.get("originalTime", function(result) { // Getting the original time from storage to reset the timer in popup.js when the timer is cancelled
-            chrome.storage.local.set({timeRemaining: result.originalTime}); // Resetting the timer to the original time after the timer is cancelled
+            chrome.storage.local.set({
+                timeRemaining: result.originalTime, // Resetting the timer to the original time after the timer is cancelled
+                isRunning: false
+            }); 
         });
     }
 });

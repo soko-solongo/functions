@@ -1,5 +1,8 @@
 // Code structure is explained in background.js file
 
+// disabled attribute is used to disable "start" and "cancel" button.
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled
+
 let selectedTime = 10; // default time is 1 min
 
 document.querySelector(".timebutton").classList.add("selected"); // Adding a visual indication of the default selected time button
