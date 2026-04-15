@@ -13,5 +13,12 @@
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "scripts/background.js"
-  }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["sheep_item.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

@@ -64,6 +64,7 @@ function removeBlur() {
 }
 
 function applyBlur() {
+    const sheepUrl = chrome.runtime.getURL("sheep_item.png"); // Getting the URL of the sheep image in the extension's directory to use it as blocker
     chrome.tabs.query({}, function(tabs) {
 
         //Applying blur to all tabs
@@ -71,32 +72,56 @@ function applyBlur() {
 
             chrome.scripting.executeScript({
                 target: {tabId: tab.id}, 
-                func: function() {
-                    let overlay = document.createElement("div");
+                args: [sheepUrl],
+                func: function(sheepUrl) {
+
+                    if (document.getElementById("blur-effect")) return; 
+
+                    let overlay = document.createElement("img");
+                    overlay.src = sheepUrl;
                     overlay.id = "blur-effect";
                     overlay.style.position = "fixed";
-                    overlay.style.top = "0";
-                    overlay.style.left = "0";
-                    overlay.style.width = "100%"; // I can't use logical property here because JS is senstive to -, so O had to use width instead of inline-size.
-                    overlay.style.height = "100%";
-                    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-                    overlay.style.backdropFilter = "blur(5px)";
+                    overlay.style.top = "50%";
+                    overlay.style.left = "50%";
+                    overlay.style.transform = "translate(-50%, -50%)";
+                    overlay.style.width = "10vw";
+                    overlay.style.height = "10vh";
                     overlay.style.zIndex = "9999";
+                    overlay.style.transition = "width 5s linear";
+
+                    // overlay.id = "blur-effect";
+                    // overlay.style.position = "fixed";
+                    // overlay.style.top = "0";
+                    // overlay.style.left = "0";
+                    // overlay.style.width = "100%"; // I can't use logical property here because JS is senstive to -, so O had to use width instead of inline-size.
+                    // overlay.style.height = "100%";
+                    // overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+                    // overlay.style.backdropFilter = "blur(5px)";
+                    // overlay.style.zIndex = "9999";
+
+
                     document.body.appendChild(overlay);
+
+                    requestAnimationFrame(function() {
+                        overlay.style.width = "150vw";
+                        overlay.style.height = "150vh"; // Animating the width of the sheep image from 5vmin to 100vw to create a zooming effect, which makes it look like the sheep is getting bigger
+                    });
                 }
             });
         }); // end of tabs.forEach
 
         // Removing the blur effect after 5 seconds.
         setTimeout(function() {
-
             removeBlur();
             chrome.storage.local.get("originalTime", function(result) { // calling the function to remove the blur effect after 5 seconds
-                chrome.storage.local.set({timeRemaining: result.originalTime}); // resetting the timer to the original time after the blur effect is removed
+                chrome.storage.local.set({
+                    timeRemaining: result.originalTime,
+                    isRunning: true
+                });
                 startTimer(); // starting the timer again after the blur effect is removed, which creates a loop of the entire process
             });
-        }, 5000);
 
+        }, 5000);
     });
 }
 
@@ -121,17 +146,21 @@ function startTimer () {
             // Showing warning 5 seconds before the blur activates
             // https://developer.chrome.com/docs/extensions/reference/api/notifications
             if (time === 5) {
-                chrome.notifications.create("Notif", {
-                    type: "basic",
-                    iconUrl: chrome.runtime.getURL("eye_icon.png"),
-                    title: "Notif",
-                    message: "Time to rest your eyes! Please take a break for 1 min"
-                });
+                // chrome.notifications.create("Notif", {
+                //     type: "basic",
+                //     iconUrl: chrome.runtime.getURL("eye_icon.png"),
+                //     title: "Notif",
+                //     message: "Time to rest your eyes! Please take a break for 1 min"
+                // });
+
+                applyBlur(); // Calling the function to apply blur effect when the timer reaches 0
+
+                
             }
 
             if (time === 0) {
                 clearInterval(intervalId); // Stopping the timer when it reaches 0
-                applyBlur(); // Calling the function to apply blur effect when the timer reaches 0
+                chrome.storage.local.set({isRunning: false}); // Setting isRunning to false in storage to indicate that the timer is not running anymore when the timer reaches 0, which disables the cancel button in popup.js after the timer reaches 0.
             }
         });  
     }, 1000)
@@ -159,5 +188,3 @@ chrome.runtime.onMessage.addListener(function(message) {
         });
     }
 });
-
-chrome.runtime.sendMessage({action: "startTimer", time: 6})
