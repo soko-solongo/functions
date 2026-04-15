@@ -87,7 +87,7 @@ function applyBlur() {
                     overlay.style.width = "10vw";
                     overlay.style.height = "10vh";
                     overlay.style.zIndex = "9999";
-                    overlay.style.transition = "width 5s linear";
+                    overlay.style.transition = "width 5s linear, height 5s linear";
 
                     // overlay.id = "blur-effect";
                     // overlay.style.position = "fixed";
@@ -121,7 +121,7 @@ function applyBlur() {
                 startTimer(); // starting the timer again after the blur effect is removed, which creates a loop of the entire process
             });
 
-        }, 5000);
+        }, 10000);
     });
 }
 
@@ -160,7 +160,6 @@ function startTimer () {
 
             if (time === 0) {
                 clearInterval(intervalId); // Stopping the timer when it reaches 0
-                chrome.storage.local.set({isRunning: false}); // Setting isRunning to false in storage to indicate that the timer is not running anymore when the timer reaches 0, which disables the cancel button in popup.js after the timer reaches 0.
             }
         });  
     }, 1000)
