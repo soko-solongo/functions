@@ -14,7 +14,7 @@
 
     --spacing: 1.5rem;
     /* --button-width: calc(10*var(--spacing)); */
-    --p-size: calc(0.8*var(--spacing));
+    --p-size: calc(0.9*var(--spacing));
 
     --popup-width: calc(16*var(--spacing));
     --gutter: calc(1*var(--spacing));
