@@ -85,9 +85,9 @@ function applyBlur() {
                     overlay.style.left = "50%";
                     overlay.style.transform = "translate(-50%, -50%)";
                     overlay.style.width = "10vw";
-                    overlay.style.height = "10vh";
+                    overlay.style.height = "auto";
                     overlay.style.zIndex = "9999";
-                    overlay.style.transition = "width 5s linear, height 5s linear";
+                    overlay.style.transition = "width 5s linear";
 
                     // overlay.id = "blur-effect";
                     // overlay.style.position = "fixed";
@@ -104,7 +104,7 @@ function applyBlur() {
 
                     requestAnimationFrame(function() {
                         overlay.style.width = "150vw";
-                        overlay.style.height = "150vh"; // Animating the width of the sheep image from 5vmin to 100vw to create a zooming effect, which makes it look like the sheep is getting bigger
+                        // overlay.style.height = "150vh"; // Animating the width of the sheep image from 5vmin to 100vw to create a zooming effect, which makes it look like the sheep is getting bigger
                     });
                 }
             });
