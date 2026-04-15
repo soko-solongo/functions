@@ -3,9 +3,9 @@
 // disabled attribute is used to disable "start" and "cancel" button.
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled
 
-let selectedTime = 30; // for demo purposes, the default time is set to 30 seconds. In a real implementation, this could be set to a longer duration like 30 minutes (1800 seconds).
+// for demo purposes, the default time is set to 30 seconds. In a real implementation, this could be set to a longer duration like 30 minutes (1800 seconds).
 
-document.querySelector(".timebutton").classList.add("selected"); // Adding a visual indication of the default selected time button
+document.querySelector(".timebutton[data-time='30']").classList.add("selected"); // Adding a visual indication of the default selected time button
 document.querySelectorAll(".timebutton").forEach(button => {
     button.addEventListener("click", function() {
         selectedTime = parseInt(this.getAttribute("data-time")); // Updating selectedTime based on the button clicked by the user

@@ -94,6 +94,7 @@ button {
 
 #timer {
     font-size: calc(3*var(--p-size));
+    font-family: var(--number-font);
 }
 
 .logo {

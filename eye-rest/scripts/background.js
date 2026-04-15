@@ -49,6 +49,15 @@
 
 
 
+// function formatTime(totalSeconds) {
+//     const mm = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+//     const ss = (totalSeconds % 60).toString().padStart(2, '0');
+//     return `${mm}:${ss}`;
+// }
+
+// console.log(formatTime(125)); // "02:05"
+
+
 
 // STORING IDs to call out later in case the user clicks "cancel" button in the middle of functios running.
 let intervalId = null; // Declaring intervalId to be empty 
