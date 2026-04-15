@@ -111,6 +111,7 @@ function applyBlocker() {
                         overlay.style.transform = "translate(-50%, -50%)";
                         overlay.style.width = "10vw";
                         overlay.style.height = "auto";
+                        overlay.style.aspectRatio = "1/1";
                         overlay.style.zIndex = "9999";
                         overlay.style.transition = "width 5s linear";
 
@@ -145,7 +146,7 @@ function applyBlocker() {
                     timeRemaining: result.originalTime,
                     isRunning: true
                 });
-                startTimer(); // starting the timer again after the blocker effect is removed, which creates a loop of the entire process
+            startTimer(); // starting the timer again after the blocker effect is removed, which creates a loop of the entire process
             });
 
         }, 15000); // for demo, it's growing for 5 sec, and staying still for 10 sec.
@@ -184,6 +185,11 @@ chrome.runtime.onMessage.addListener(function(message) {
     }
 
     if (message.action === "cancelTimer") { // The timer will be cancelled in background.js when the user clicks the cancel button in popup.js
+        if (blockerTimeoutId) {
+            clearTimeout(blockerTimeoutId); // Clearing the blocker timeout to prevent the blocker from being applied after the timer is cancelled
+            blockerTimeoutId = null; // Resetting blockerTimeoutId to null after clearing the timeout
+        }
+
         clearInterval(intervalId); // Clearing everything by grabbing the null id I set earlier.
         intervalId = null; // Resetting intervalId to null after clearing the timer
         removeBlocker(); // Calling the function to remove the blocker effect when the timer is cancelled
