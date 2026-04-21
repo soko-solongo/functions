@@ -95,25 +95,12 @@ button {
 }
 
 .logo {
-    width: calc(var(--popup-width) / 3);
-    height: auto;
+    inline-size: calc(0.25 * var(--popup-width));
+    block-size: auto;
 
     svg {
         inline-size: 100%;
         block-size: auto;
-    }
-
-    path {
-        stroke-width: 10;
-    }
-
-    path[fill = "#000000"] {
-        fill: var(--white);
-    }
-    
-    svg path {
-        stroke-width: 10;
-        /* fill: pink; */
     }
 }
 
