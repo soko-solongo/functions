@@ -6,14 +6,12 @@
     --text-font: 'LXGW Marker Gothic', sans-serif;
     --number-font: 'LXGW WenKai Mono TC', monospace;
 
-
     --black: #171717;
     --white: #f7f7f7;
     --yellow: #ffe14b;
-    --orange: rgb(249, 121, 71);
+    --orange: #ff8a4b;
 
     --spacing: 1.5rem;
-    /* --button-width: calc(10*var(--spacing)); */
     --p-size: calc(0.8*var(--spacing));
 
     --popup-width: calc(12*var(--spacing));
@@ -62,7 +60,6 @@ button {
         &:hover {
             transform: none;
         }
-
     }
 }
 
@@ -98,6 +95,25 @@ button {
 }
 
 .logo {
-    width: calc(0.25*var(--popup-width));
+    width: calc(var(--popup-width) / 3);
     height: auto;
+
+    svg {
+        inline-size: 100%;
+        block-size: auto;
+    }
+
+    path {
+        stroke-width: 10;
+    }
+
+    path[fill = "#000000"] {
+        fill: var(--white);
+    }
+    
+    svg path {
+        stroke-width: 10;
+        /* fill: pink; */
+    }
 }
+
