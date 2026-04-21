@@ -3,7 +3,11 @@
 // disabled attribute is used to disable "start" and "cancel" button.
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled
 
+// specifying multiple conditions in if else rule
+// https://stackoverflow.com/questions/8710442/how-to-specify-multiple-conditions-in-an-if-statement-in-javascript
+
 // for demo purposes, the default time is set to 30 seconds. In a real implementation, this could be set to a longer duration like 30 minutes (1800 seconds).
+
 
 document.querySelector(".timebutton[data-time='30']").classList.add("selected"); // Adding a visual indication of the default selected time button
 document.querySelectorAll(".timebutton").forEach(button => {
@@ -13,6 +17,8 @@ document.querySelectorAll(".timebutton").forEach(button => {
             btn.classList.remove("selected");
         });
         button.classList.add("selected"); // Adding a visual indication of the selected time button
+
+        document.getElementById("timer").innerText = selectedTime;
         });
     });
 
@@ -22,15 +28,16 @@ function updateButtonState(isRunning) {
 }
 
 setInterval(function() {
-    chrome.storage.local.get("timeRemaining", function(result) {
-        if (result.timeRemaining >= 0) {
+    chrome.storage.local.get(["timeRemaining", "isRunning"], function(result) {
+        if (result.isRunning && result.timeRemaining >= 0) {
             document.getElementById("timer").innerText = result.timeRemaining; // Updating the timer in popup.html every second
         }
-    });
-
-    chrome.storage.local.get("isRunning", function(result) {
         updateButtonState(result.isRunning);
     });
+
+    // chrome.storage.local.get("isRunning", function(result) {
+    //     updateButtonState(result.isRunning);
+    // });
 }, 1000);
 
 // start button
