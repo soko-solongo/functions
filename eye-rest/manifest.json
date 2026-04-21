@@ -6,7 +6,7 @@
   "manifest_version": 3,
   "action": {
     "default_popup": "eye-rest.html",
-    "default_icon": "eye_icon.png"
+    "default_icon": "assets/eye_icon.png"
   },
 
   "permissions": ["scripting", "activeTab", "tabs", "storage", "notifications"],
@@ -17,7 +17,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["sheep_item.png"],
+      "resources": ["assets/sheep_item.png"],
       "matches": ["<all_urls>"]
     }
   ]

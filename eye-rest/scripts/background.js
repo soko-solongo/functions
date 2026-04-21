@@ -96,7 +96,7 @@ function startTimer () {
 
 // APPLYING THE BLOCKER EFFECT aka injecting the sheep
 function applyBlocker() {
-    const sheepUrl = chrome.runtime.getURL("sheep_item.png"); // Getting the URL of the sheep image in the extension's directory to use it as blocker
+    const sheepUrl = chrome.runtime.getURL("assets/sheep_item.png"); // Getting the URL of the sheep image in the extension's directory to use it as blocker
     chrome.tabs.query({}, function(tabs) {
 
         //Applying blocker to all tabs
