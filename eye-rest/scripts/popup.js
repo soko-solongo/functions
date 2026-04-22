@@ -6,10 +6,20 @@
 // specifying multiple conditions in if else rule
 // https://stackoverflow.com/questions/8710442/how-to-specify-multiple-conditions-in-an-if-statement-in-javascript
 
+// formatting the time to be MM:SS through creating a new function
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+
 // for demo purposes, the default time is set to 30 seconds. In a real implementation, this could be set to a longer duration like 30 minutes (1800 seconds).
 
+
+function formatTime(totalSeconds) {
+    const mm = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const ss = (totalSeconds % 60).toString().padStart(2, '0');
+    return `${mm}:${ss}`;
+}
+
 let selectedTime = 30;
-document.getElementById("timer").innerText = selectedTime;
+document.getElementById("timer").innerText = formatTime(selectedTime);
 
 document.querySelector(".timebutton[data-time='30']").classList.add("selected"); // Adding a visual indication of the default selected time button
 document.querySelectorAll(".timebutton").forEach(button => {
@@ -20,7 +30,7 @@ document.querySelectorAll(".timebutton").forEach(button => {
         });
         button.classList.add("selected"); // Adding a visual indication of the selected time button
 
-        document.getElementById("timer").innerText = selectedTime;
+        document.getElementById("timer").innerText = formatTime(selectedTime);
         });
     });
 
@@ -32,10 +42,10 @@ function updateButtonState(isRunning) {
 setInterval(function() {
     chrome.storage.local.get(["timeRemaining", "isRunning"], function(result) {
         if (result.isRunning && result.timeRemaining >= 0) {
-            document.getElementById("timer").innerText = result.timeRemaining; // Updating the timer in popup.html every second
+            document.getElementById("timer").innerText = formatTime(result.timeRemaining); // Updating the timer in popup.html every second
 
         } else if (!result.isRunning) {
-            document.getElementById("timer").innerText = selectedTime; // Resetting displayed timer to --
+            document.getElementById("timer").innerText = formatTime(selectedTime); // Resetting displayed timer to --
         }
 
         updateButtonState(result.isRunning);

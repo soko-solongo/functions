@@ -35,7 +35,6 @@
 // service-worker.js runs in the background and listens for updates/messages from popup.js to perform the actions.
 // runtime.sendMessage() is used to send a message from background.js to popup.js to reset the timer and start over again after the blocker effect is removed. 
 // runtime.onMessage() is used to listen for messages in popup.js and execute the function to reset the timer and start over again when the message is received.
-// requestAnimationFrame() is used to create a smooth animation effect when the sheep image grows, which makes it look like the sheep is getting bigger gradually.
 
 //Learning resources for SOME FUNCTIONS:
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval
@@ -45,17 +44,6 @@
 // https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/sample.page-redder/service-worker.js
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/sendMessage
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onMessage
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
-
-
-
-// function formatTime(totalSeconds) {
-//     const mm = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-//     const ss = (totalSeconds % 60).toString().padStart(2, '0');
-//     return `${mm}:${ss}`;
-// }
-
-// console.log(formatTime(125)); // "02:05"
 
 
 
