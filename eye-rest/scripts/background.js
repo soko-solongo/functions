@@ -105,7 +105,7 @@ function applyBlocker() {
             // injecting blocker.css
             chrome.scripting.insertCSS ({
                 target: {tabId: tab.id}, 
-                files: ["assets/blocker.css"]
+                files: ["styles/blocker.css"]
             });
 
             chrome.scripting.executeScript({
@@ -159,7 +159,7 @@ function removeBlocker() {
 
             chrome.scripting.removeCSS({
                 target: {tabId: tab.id}, 
-                files: ["assets/blocker.css"]
+                files: ["styles/blocker.css"]
             });
 
             chrome.scripting.executeScript({
