@@ -1,21 +1,17 @@
 
 {
-  "name": "Eyerest Reminder!",
+  "name": "Eyerest Reminder",
   "description": "This is a simple extension to remind you to rest your eye once in few minutes.",
   "version": "1.0",
   "manifest_version": 3,
+
   "action": {
-    "default_popup": "eye-rest.html",
-    "default_icon": {
-      "16" : "assets/16.png",
-      "32" : "assets/32.png",
-      "64" : "assets/64.png",
-      "128" : "assets/128.png"
-    }
+    "default_popup": "eye-rest.html"
   },
 
-  "permissions": ["scripting", "activeTab", "tabs", "storage", "notifications"],
+  "permissions": ["scripting", "activeTab", "tabs", "storage"],
   "host_permissions": ["<all_urls>"],
+
   "background": {
     "service_worker": "scripts/background.js"
   },
@@ -25,5 +21,12 @@
       "resources": ["assets/sheep_item.svg", "styles/blocker.css"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+
+  "icons": {
+    "16" : "assets/16.png",
+    "32" : "assets/32.png",
+    "64" : "assets/64.png",
+    "128" : "assets/128.png"
+  }
 }
