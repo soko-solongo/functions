@@ -127,6 +127,7 @@ function applyBlocker() {
 
         // Removing the blocker effect after X seconds.
         blockerTimeoutId = setTimeout(function() {
+            blockerTimeoutId = null;
             removeBlocker();
             chrome.storage.local.get("originalTime", function(result) { // calling the function to remove the blocker effect
                 chrome.storage.local.set({
