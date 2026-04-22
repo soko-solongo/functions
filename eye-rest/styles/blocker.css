@@ -29,12 +29,19 @@
     block-size: auto;
     aspect-ratio: 1/1;
     z-index: 9998;
-    animation: sheep-grow 5s linear forwards;
+    animation: sheep-grow 5s linear forwards, sheep-wiggle 1s ease-in-out 3;
 }
 
 @keyframes sheep-grow {
     from { inline-size: 10vw; }
     to { inline-size: 150vw; }
+}
+
+@keyframes sheep-wiggle {
+    0% { rotate: 0deg; }
+    25% { rotate: -2deg; }
+    50% { rotate: 2deg; }
+    100% { rotate: 0deg; }
 }
 
 /*  I can't call my cancel button from style.css because if i import my css file here, my defined-style will be applied to everything on built-in screen (which i don't want, so I am coding cancel button here again). */
