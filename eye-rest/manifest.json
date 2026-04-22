@@ -17,7 +17,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["assets/sheep_item.svg", "assets/blocker.css"],
+      "resources": ["assets/sheep_item.svg", "styles/blocker.css"],
       "matches": ["<all_urls>"]
     }
   ]

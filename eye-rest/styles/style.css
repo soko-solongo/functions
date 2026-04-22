@@ -55,7 +55,6 @@ button {
     border: var(--border);
     padding-block: calc(0.4*var(--gutter));
     padding-inline: calc(0.6*var(--gutter));
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--black);
     transition: var(--transition);
 
     &:hover,
