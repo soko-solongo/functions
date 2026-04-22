@@ -6,23 +6,22 @@
         <link rel="stylesheet" href="assets/style.css">
     </head>
     <body>
-        <div class="logo">
-            <!-- <img src="assets/sheep_logo.png" alt="Sheep Logo"> -->
+        <header>
             <img src="assets/sheep_logo.svg" alt = "Sheep logo">
-        </div>
+        </header>
 
-        <h1>Look away for 1 minute when big sheep appears!</h1>
-        <div class="time-choices">
+        <h1>Rest your eyes for 1 min when big sheep appears!</h1>
+        <fieldset>
             <button class="timebutton" data-time="30">30 min</button>
             <button class="timebutton" data-time="60">60 min</button>
-        </div>
+        </fieldset>
 
         <h1>Next break in:</h1>
         <p id="timer">--</p>
-        <div class="controls">
+        <footer>
             <button id="startbutton">Start</button>
             <button id="cancelbutton">Cancel</button>
-        </div>
+        </footer>
         <script src="scripts/popup.js"></script>
     </body>
 </html>
