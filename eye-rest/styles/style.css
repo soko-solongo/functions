@@ -37,7 +37,6 @@ body {
     font-family: var(--text-font);
     font-size: var(--p-size);
     text-align: center;
-    padding: calc(var(--gutter) / 3);
     border: var(--border);
 
     background: var(--white);

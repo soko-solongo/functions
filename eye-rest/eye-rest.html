@@ -2,8 +2,11 @@
 
 <html>
     <head>
+        <title>Soko's Project 5: Functions</title>
+        <meta name="description" content="This is a simple chrome extension to remind you to rest your eye once in few minutes.">
         <link rel="stylesheet" href="styles/reset.css">
         <link rel="stylesheet" href="styles/style.css">
+        <script src="scripts/popup.js"></script>
     </head>
     <body>
         <header>
@@ -12,7 +15,6 @@
 
         <h1>Rest your eyes for 1 min when big sheep appears!</h1>
         <fieldset>
-
             <!-- for class presentation, I set the time to be shorter intentionally, but in real life, we would do: -->
             <!-- step 1: we could replace data-time="30" by "1800" (30min * 60sec = 1800) here AND -->
             <!-- step 2: change "30" value in popup.js code line 21 & 24 to be 1800 AND -->
@@ -23,10 +25,10 @@
 
         <h1>Next break in:</h1>
         <p id="timer">--</p>
+        
         <footer>
             <button id="startbutton">Start</button>
             <button id="cancelbutton">Cancel</button>
         </footer>
-        <script src="scripts/popup.js"></script>
     </body>
 </html>

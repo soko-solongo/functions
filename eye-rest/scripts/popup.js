@@ -20,31 +20,31 @@ function formatTime(totalSeconds) {
 let selectedTime = 30;
 document.getElementById("timer").innerText = formatTime(selectedTime);
 
-document.querySelector(".timebutton[data-time='30']").classList.add("selected"); // Adding a visual indication of the default selected time button
+document.querySelector(".timebutton[data-time='30']").classList.add("selected"); // adding a visual indication of the default selected time button
 document.querySelectorAll(".timebutton").forEach(button => {
     button.addEventListener("click", function() {
-        selectedTime = parseInt(this.getAttribute("data-time")); // Updating selectedTime based on the button clicked by the user
+        selectedTime = parseInt(this.getAttribute("data-time")); // updating selectedTime based on the button clicked by the user
         document.querySelectorAll(".timebutton").forEach(function(btn) {
             btn.classList.remove("selected");
         });
-        button.classList.add("selected"); // Adding a visual indication of the selected time button
+        button.classList.add("selected"); // adding a visual indication of the selected time button
 
         document.getElementById("timer").innerText = formatTime(selectedTime);
         });
     });
 
 function updateButtonState(isRunning) {
-    document.getElementById("startbutton").disabled = isRunning; // Disabling the start button when the timer is running
-    document.getElementById("cancelbutton").disabled = !isRunning; // Enabling the cancel button when the timer is running
+    document.getElementById("startbutton").disabled = isRunning; // disabling the start button when the timer is running
+    document.getElementById("cancelbutton").disabled = !isRunning; // enabling the cancel button when the timer is running
 }
 
 setInterval(function() {
     chrome.storage.local.get(["timeRemaining", "isRunning"], function(result) {
         if (result.isRunning && result.timeRemaining >= 0) {
-            document.getElementById("timer").innerText = formatTime(result.timeRemaining); // Updating the timer in popup.html every second
+            document.getElementById("timer").innerText = formatTime(result.timeRemaining); // updating the timer in popup.html every second
 
         } else if (!result.isRunning) {
-            document.getElementById("timer").innerText = formatTime(selectedTime); // Resetting displayed timer to --
+            document.getElementById("timer").innerText = formatTime(selectedTime); // resetting displayed timer to --
         }
 
         updateButtonState(result.isRunning);
@@ -54,10 +54,10 @@ setInterval(function() {
 
 // start button
 document.getElementById("startbutton").addEventListener("click", function() {
-    chrome.runtime.sendMessage({action: "startTimer", time: selectedTime}); // Sending a message to background.js to start the timer when the user clicks the start button in popup.js
+    chrome.runtime.sendMessage({action: "startTimer", time: selectedTime}); // sending a message to background.js to start the timer when the user clicks the start button in popup.js
 })
 
 // cancel button
 document.getElementById("cancelbutton").addEventListener("click", function() {
-    chrome.runtime.sendMessage({action: "cancelTimer"}); // Sending a message to background.js to cancel the entire thing when the user clicks the cancel button in popup.js
+    chrome.runtime.sendMessage({action: "cancelTimer"}); // sending a message to background.js to cancel the entire thing when the user clicks the cancel button in popup.js
 })

@@ -48,35 +48,35 @@
 
 
 // STORING IDs to call out later in case the user clicks "cancel" button in the middle of functios running.
-let intervalId = null; // Declaring intervalId to be empty 
-    // let intervalID = null; --- It means the value slot exists, but it is empty.
-    // intervalId = setInterval(..bla bla...) --- It means the value slot is now filled with timer value.
-    // clearInterval(intervalId) ---  It means the value slot is empty back again.
-let blockerTimeoutId = null; // Clearing the blocker in case the user clicks cancel
+let intervalId = null; // declaring intervalId to be empty 
+    // let intervalID = null; --- it means the value slot exists, but it is empty.
+    // intervalId = setInterval(..bla bla...) --- it means the value slot is now filled with timer value.
+    // clearInterval(intervalId) ---  it means the value slot is empty back again.
+let blockerTimeoutId = null; // clearing the blocker in case the user clicks cancel
 
 
 // STARTING THE COUNTDOWN TIMER
 function startTimer () {
 
-    // Clearing any existing timer before starting a new one
+    // clearing any existing timer before starting a new one
     if (intervalId) {
         clearInterval(intervalId);
     }
 
-    // Every 1 second will be deducted from the original value indicated in html file.
+    // every 1 second will be deducted from the original value indicated in html file.
     intervalId = setInterval(function() {
 
         chrome.storage.local.get("timeRemaining", function(result) {
-            let time = result.timeRemaining - 1; // Subtracting 1 from the time remaining
+            let time = result.timeRemaining - 1; // subtracting 1 from the time remaining
             chrome.storage.local.set({timeRemaining: time});
 
-            // Showing warning 5 seconds before the blocker activates
+            // showing warning 5 seconds before the blocker activates
             if (time === 5) {
-                applyBlocker(); // Calling the function to apply blocker effect
+                applyBlocker(); // calling the function to apply blocker effect
             }
 
             if (time === 0) {
-                clearInterval(intervalId); // Stopping the timer when it reaches 0
+                clearInterval(intervalId); // stopping the timer when it reaches 0
             }
         });  
     }, 1000) // 1000ms = 1 second
@@ -84,10 +84,10 @@ function startTimer () {
 
 // APPLYING THE BLOCKER EFFECT aka injecting the sheep
 function applyBlocker() {
-    const sheepUrl = chrome.runtime.getURL("assets/sheep_item.svg"); // Getting the URL of the sheep image in the extension's directory to use it as blocker
+    const sheepUrl = chrome.runtime.getURL("assets/sheep_item.svg"); // getting the URL of the sheep image in the extension's directory to use it as blocker
     chrome.tabs.query({}, function(tabs) {
 
-        //Applying blocker to all tabs
+        // applying blocker to all tabs
         tabs.forEach(function(tab) {
 
             // injecting blocker.css
@@ -125,7 +125,7 @@ function applyBlocker() {
                 });
         });
 
-        // Removing the blocker effect after X seconds.
+        // removing the blocker effect after X seconds.
         blockerTimeoutId = setTimeout(function() {
             blockerTimeoutId = null;
             removeBlocker();
@@ -172,27 +172,27 @@ function removeBlocker() {
 chrome.runtime.onMessage.addListener(function(message) {
     if (message.action === "startTimer") {
         chrome.storage.local.set({
-            timeRemaining: message.time, // Countdown value taken directly from the msg popup sent.
-            originalTime: message.time, // Storing the original time that user chose to begin with, so that it resets back to it.
+            timeRemaining: message.time, // countdown value taken directly from the msg popup sent.
+            originalTime: message.time, // storing the original time that user chose to begin with, so that it resets back to it.
             isRunning: true // control to enable/disable start or cancel button.
         }); 
         
-        startTimer(); // Starting the timer
+        startTimer(); // starting the timer
     }
 
-    if (message.action === "cancelTimer") { // The timer will be cancelled in background.js when the user clicks the cancel button in popup.js
+    if (message.action === "cancelTimer") { // the timer will be cancelled in background.js when the user clicks the cancel button in popup.js
         if (blockerTimeoutId) {
-            clearTimeout(blockerTimeoutId); // Clearing the blocker timeout to prevent the blocker from being applied after the timer is cancelled
-            blockerTimeoutId = null; // Resetting blockerTimeoutId to null after clearing the timeout
+            clearTimeout(blockerTimeoutId); // clearing the blocker timeout to prevent the blocker from being applied after the timer is cancelled
+            blockerTimeoutId = null; // resetting blockerTimeoutId to null after clearing the timeout
         }
 
-        clearInterval(intervalId); // Clearing everything by grabbing the null id I set earlier.
-        intervalId = null; // Resetting intervalId to null after clearing the timer
-        removeBlocker(); // Calling the function to remove the blocker effect when the timer is cancelled
-        chrome.storage.local.set({ isRunning: false }); // Setting isRunning to false in storage to indicate that the timer is not running anymore after the timer is cancelled
-        chrome.storage.local.get("originalTime", function(result) { // Getting the original time from storage to reset the timer in popup.js when the timer is cancelled
+        clearInterval(intervalId); // clearing everything by grabbing the null id I set earlier.
+        intervalId = null; // resetting intervalId to null after clearing the timer
+        removeBlocker(); // calling the function to remove the blocker effect when the timer is cancelled
+        chrome.storage.local.set({ isRunning: false }); // setting isRunning to false in storage to indicate that the timer is not running anymore after the timer is cancelled
+        chrome.storage.local.get("originalTime", function(result) { // getting the original time from storage to reset the timer in popup.js when the timer is cancelled
             chrome.storage.local.set({
-                timeRemaining: result.originalTime // Resetting the timer to the original time after the timer is cancelled
+                timeRemaining: result.originalTime // resetting the timer to the original time after the timer is cancelled
             }); 
         });
     }
