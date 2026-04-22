@@ -169,7 +169,7 @@ function removeBlocker() {
                     let overlay = document.getElementById("sheep-blocker");
                     if (overlay) overlay.remove();
 
-                    let cancelBtn = documents.getElementById("sheep-cancel");
+                    let cancelBtn = document.getElementById("sheep-cancel");
                     if (cancelBtn) cancelBtn.remove();
                 }
             });

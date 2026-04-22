@@ -20,7 +20,6 @@
     --transition: all 0.2s ease-in-out;
     --border: 1.5px solid var(--black);
     --border-radius: calc(4*var(--spacing));
-    --shadow-offset: calc(var(--spacing) / 5);
 }
 
 header {
@@ -61,15 +60,13 @@ button {
 
     &:hover,
     &.selected {
-        transform: translateX(var(--shadow-offset)) translateY(var(--shadow-offset));
-        box-shadow: 0 0 0 var(--black);
+        transform: scale(1.05);
         transition: var(--transition);
     }
 
     &:disabled {
-        opacity: 0.5;
+        opacity: 0.3;
         filter: grayscale(100%);
-        box-shadow: none;
 
         &:hover {
             transform: none;
