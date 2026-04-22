@@ -1,7 +1,7 @@
 <h1>MPS CD | Project 5: Functions by Soko Mungunsukh</h1>
 
 <h2>About</h2>
-<p>Eyerest Reminder is a Chrome browser extension that helps screen-heavy users protect their eyes by reminding them a regular break for 1 minute. The user is able to choose between two work-time options: 30 min OR 60 min.</p>
+<p>Eyerest Reminder is a Chrome browser extension that helps screen-heavy users protect their eyes by reminding them a regular break of 1 minute once in every 30 or 60 min based on user's choice.</p>
 <p>The problem: Most people know they should rest their eyes, but forget to do it. This extension makes it harder to ignore, because a big sheep grows and takes over every open tab making the user impossible to work unless they click "Cancel" which terminates every active flow.</p>
 
 <h2>How to Try</h2>
