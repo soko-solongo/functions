@@ -102,50 +102,40 @@ function applyBlocker() {
         //Applying blocker to all tabs
         tabs.forEach(function(tab) {
 
+            // injecting blocker.css
+            chrome.scripting.insertCSS ({
+                target: {tabId: tab.id}, 
+                files: ["assets/blocker.css"]
+            });
+
             chrome.scripting.executeScript({
                 target: {tabId: tab.id}, 
                 args: [sheepUrl],
                 func: function(sheepUrl) {
 
-                    if (document.getElementById("blocker-effect")) return; 
+                    if (document.getElementById("sheep-blocker")) return; 
 
                     let overlay = document.createElement("img");
-
-                        // I tried placing the styling code in CSS file, it doesn't work because JS can't access the items that doesn't exist in the DOM yet, so I had to put the styling code here after creating the element in order to make it work.
                         overlay.src = sheepUrl;
-                        overlay.id = "blocker-effect";
-                        overlay.style.position = "fixed";
-                        overlay.style.top = "50%";
-                        overlay.style.left = "50%";
-                        overlay.style.transform = "translate(-50%, -50%)";
-                        overlay.style.width = "10vw";
-                        overlay.style.height = "auto";
-                        overlay.style.aspectRatio = "1/1";
-                        overlay.style.zIndex = "9999";
-                        overlay.style.transition = "width 5s linear";
+                        overlay.id = "sheep-blocker";
+                        document.body.appendChild(overlay);
 
-                    // overlay.id = "blocker-effect";
-                    // overlay.style.position = "fixed";
-                    // overlay.style.top = "0";
-                    // overlay.style.left = "0";
-                    // overlay.style.width = "100%"; 
-                    // overlay.style.height = "100%";
-                    // overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-                    // overlay.style.backdropFilter = "blur(5px)";
-                    // overlay.style.zIndex = "9999";
+                    let cancelBtn = document.createElement("button");
+                        cancelBtn.id = "sheep-cancel";
+                        cancelBtn.innerText = "Cancel";
+                        cancelBtn.addEventListener("click", function() {
+                            chrome.runtime.sendMessage({
+                                action: "cancelTimer"
+                            });
 
+                            // overlay.remove();
+                            // cancelBtn.remove();
+                        });
 
-                    document.body.appendChild(overlay);
-
-                    requestAnimationFrame(function() {
-                        requestAnimationFrame(function() {
-                            overlay.style.width = "150vw"; // Animating the width of the sheep image from 10vw to 150vw to create a growing effect.
-                        }); 
-                    });
-
-                }
-            });
-        }); // end of tabs.forEach
+                        document.body.appendChild(cancelBtn);
+                    }
+                });
+        });
 
         // Removing the blocker effect after X seconds.
         blockerTimeoutId = setTimeout(function() {
@@ -162,17 +152,25 @@ function applyBlocker() {
     });
 }
 
-// OPPOSITE OF applyBlocker(). It injects code into every opened tab and finds id = "blocker-effect" and removes it.
+// OPPOSITE OF applyBlocker(). It injects code into every opened tab and finds id = "sheep-blocker" and removes it.
 function removeBlocker() {
     chrome.tabs.query({}, function(tabs) {
         tabs.forEach(function(tab) {
+
+            chrome.scripting.removeCSS({
+                target: {tabId: tab.id}, 
+                files: ["assets/blocker.css"]
+            });
+
             chrome.scripting.executeScript({
                 target: {tabId: tab.id}, 
                 func: function() {
-                    let overlay = document.getElementById("blocker-effect");
-                    if (overlay) {
-                        overlay.remove();
-                    }
+
+                    let overlay = document.getElementById("sheep-blocker");
+                    if (overlay) overlay.remove();
+
+                    let cancelBtn = documents.getElementById("sheep-cancel");
+                    if (cancelBtn) cancelBtn.remove();
                 }
             });
         });

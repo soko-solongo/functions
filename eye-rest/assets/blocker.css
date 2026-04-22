@@ -1,0 +1,65 @@
+/* This is a seperate css file only for blocker effect. I can't inject my style.css to my blocker effect because it will change every button to be my pill-shape, for example. */
+
+@import url('https://fonts.googleapis.com/css2?family=LXGW+Marker+Gothic&family=LXGW+WenKai+Mono+TC&display=swap');
+
+
+/* I can't demonstrate :root {} here because it will mess up the entire built-in screen. So, I am assigning variables only for my unique id without messing up with other rules. */
+#sheep-blocker, 
+#sheep-cancel {
+    --spacing: 1.5rem;
+    --text-font: 'LXGW Marker Gothic', sans-serif;
+    --black: #171717;
+    --orange: #ff8a4b;
+    --p-size: calc(0.8*var(--spacing));
+    --popup-width: calc(12*var(--spacing));
+    --gutter: var(--spacing);
+
+    --transition: all 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    --border: 1.5px solid var(--black);
+    --border-radius: calc(4*var(--spacing));
+    --shadow-offset: calc(var(--spacing) / 5);
+
+}
+
+#sheep-blocker {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    inline-size: 10vw;
+    block-size: auto;
+    aspect-ratio: 1/1;
+    z-index: 9998;
+    animation: sheep-grow 5s linear forwards;
+}
+
+@keyframes sheep-grow {
+    from { inline-size: 10vw; }
+    to { inline-size: 150vw; }
+}
+
+/*  I can't call my cancel button from style.css because if i import my css file here, my defined-style will be applied to everything on built-in screen (which i don't want, so I am coding cancel button here again). */
+#sheep-cancel {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    z-index: 9999;
+
+    font-family: var(--text-font) !important;
+    font-size: var(--p-size);
+    color: var(--black);
+    background: var(--orange);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--black);
+    transition: var(--transition);
+
+    padding-block: calc(0.4*var(--gutter));
+    padding-inline: calc(0.6*var(--gutter));
+
+    &:hover {
+        transform: translateX(var(--shadow-offset)) translateY(var(--shadow-offset));
+        box-shadow: 0 0 0 var(--black);
+        transition: var(--transition);
+    }
+}
