@@ -4,7 +4,7 @@
 //    startTimer() counts down every 1 second using storage, and then calls applyBlocker() when time reaches 0.
 //    applyBlocker() applies the blocker effect to all tabs using chrome.scripting (by injecting the code), and then removes the blocker effect after 5 seconds using setTimeout().
 
-// 2. popup.js listens for messages from background.js to reset the timer and start over again after the blocker effect is removed.
+// 2. popup.js listens for messages from background.js by reading storage value to reset the timer and start over again after the blocker effect is removed.
 //    popup.js reads the time remaining from storage and updates the timer in popup.html every second using setInterval(). 
 //    when start is clicked, popup.js sends a message to background.js to start the timer.
 
@@ -129,7 +129,7 @@ function applyBlocker() {
         blockerTimeoutId = setTimeout(function() {
             blockerTimeoutId = null;
             removeBlocker();
-            chrome.storage.local.get("originalTime", function(result) { // calling the function to remove the blocker effect
+            chrome.storage.local.get("originalTime", function(result) {
                 chrome.storage.local.set({
                     timeRemaining: result.originalTime,
                     isRunning: true
@@ -176,7 +176,7 @@ chrome.runtime.onMessage.addListener(function(message) {
             originalTime: message.time, // Storing the original time that user chose to begin with, so that it resets back to it.
             isRunning: true // control to enable/disable start or cancel button.
         }); 
-        // Setting the timer to 10 seconds
+        
         startTimer(); // Starting the timer
     }
 
